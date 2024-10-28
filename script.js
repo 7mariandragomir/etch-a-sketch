@@ -87,11 +87,12 @@ sliderBtn.addEventListener("click", () => {
 })
 
 // Colors
-// const colorWhite = document.querySelector("#white");
-// const colorBlue = document.querySelector("#blue");
-// const colorRed = document.querySelector("#red");
-// const colorEraser = document.querySelector("#eraser");
 const colorBtns = document.querySelector("#color-btns");
+
+function getRandomColor() {
+    let n = (Math.random() * 0xfffff * 100000).toString(16);
+    return '#' + n.slice(0, 6);
+}
 
 colorBtns.addEventListener("click", (e) => {
     selectedColor = e.target.id;
@@ -108,17 +109,10 @@ colorBtns.addEventListener("click", (e) => {
         case "eraser": {
             color = "";
             break}
+        case "random": {
+            
+            color = getRandomColor();
+            break;
+        }
     }
 })
-
-// colors.forEach((colorBtn) => {
-//     colorBtn.addEventListener("click", (e) =>{
-//         e.preventDefault();
-//         console.log(e);
-//         console.log("clicked!")
-
-//     })
-// })
-
-
-

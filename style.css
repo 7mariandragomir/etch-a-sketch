@@ -11,7 +11,7 @@ body {
     width: 100vw;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
 }
 
@@ -21,7 +21,8 @@ body {
     justify-content: start;
     align-items: center;
     width: 70vw;
-    outline: 1px solid gray;
+    max-width: 960px;
+    border: 1px solid gray;
 }
 
 .grid-box {
@@ -31,9 +32,11 @@ body {
 }
 
 .options {
+    padding: 30px 10px;
     display: flex;
     flex-direction: row;
     width: 70vw;
+    max-width: 960px;
     justify-content: space-between;
 }
 
@@ -76,8 +79,12 @@ body {
     height: 30px;
 }
 
-#color-btns-btn:hover {
+#color-btns:hover {
     cursor: pointer;
+}
+
+#color-btns #random {
+    animation: colorGradient 2s infinite;
 }
 
 #color-btns #white {
@@ -95,4 +102,36 @@ body {
 #color-btns #eraser {
     background-color: transparent;
     color: red;
+}
+
+
+.gradient { 
+    animation: colorGradient 60s infinite;
+    transition: ease-in-out;
+}
+
+@keyframes colorGradient {
+    0% {
+        background-color: rgb(255, 80, 80);
+    }
+
+    15% {
+        background-color:rgb(245, 242, 51);
+    }
+
+    35% {
+        background-color:rgb(88, 243, 73)
+    }
+
+    55% {
+        background-color:rgb(20, 239, 255);
+    }
+
+    75% {
+        background-color:rgb(153, 54, 233);
+    }
+
+    100% {
+        background-color: rgb(255, 80, 80);
+    }
 }
