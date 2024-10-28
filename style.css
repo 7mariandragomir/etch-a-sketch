@@ -30,6 +30,13 @@ body {
     height: 50px;
 }
 
+.options {
+    display: flex;
+    flex-direction: row;
+    width: 70vw;
+    justify-content: space-between;
+}
+
 .slider {
     color: #fff;
     display: flex;
@@ -49,4 +56,43 @@ body {
 .slider button:hover {
     font-weight: 800;
     background-color: aquamarine;
+}
+
+#color-btns {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    padding-bottom: 10px;
+    gap: 10px;
+}
+
+#color-btns .color-btn {
+    padding: 0;
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 20px;
+    margin: 0;
+    outline: 0;
+    width: 30px;
+    height: 30px;
+}
+
+#color-btns-btn:hover {
+    cursor: pointer;
+}
+
+#color-btns #white {
+    background-color: #fff;
+}
+
+#color-btns #blue {
+    background-color: rgb(0, 119, 255);
+}
+
+#color-btns > #red {
+    background-color: hsl(345, 77%, 42%);
+}
+
+#color-btns #eraser {
+    background-color: transparent;
+    color: red;
 }
