@@ -8,6 +8,13 @@ let numOfBoxes = 24;
 let boxSize = container.clientWidth / numOfBoxes; 
 
 
+//handle Rainbow effect
+//function to get random number from 1 to 255
+function getRGBNumber(n = Math.random() * 10000) {
+    return Math.floor((n/10000) * (255-1) + 1);
+}
+let isRainbow = false;
+
 // function to reset container 
 function resetContainer(cont) {
     let children = cont.childELementCount;
@@ -53,9 +60,13 @@ function startListeners() {
     // Event Listeners for the boxes
     gridBoxes.forEach((box) => {
         // color the box if you hover while holding left-click
-        box.addEventListener("mouseenter", () => {
+        box.addEventListener("mouseenter", (e) => {
             if(isLeftClick) {
-                box.style.backgroundColor = color;
+                if(isRainbow) {
+                    box.style.backgroundColor = 'rgb(' + getRGBNumber() + ',' + getRGBNumber() + ',' + getRGBNumber() + ')';
+                } else {
+                    box.style.backgroundColor = color;
+                }
                 box.style.transition = ".5s";
             }
         })
@@ -99,20 +110,28 @@ colorBtns.addEventListener("click", (e) => {
     switch(selectedColor) {
         case "white": {
             color = "#fff";
+            isRainbow = false;
             break};
         case "blue": {
             color = "rgb(0, 119, 255)";
+            isRainbow = false;
             break} 
         case "red": {
             color = "hsl(345, 77%, 42%)";
+            isRainbow = false;
             break}
         case "eraser": {
             color = "";
+            isRainbow = false;  
             break}
         case "random": {
-            
-            color = getRandomColor();
+            // let condition = false;
+            // while(condition) {
+            //     color = 'rgb(' + getRGBNumber() + ',' + getRGBNumber() + ',' + getRGBNumber() + ')';
+            // }
+            isRainbow = true;            
             break;
         }
     }
 })
+
