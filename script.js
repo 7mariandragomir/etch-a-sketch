@@ -1,21 +1,7 @@
 let body = document.querySelector("body");
 let container = document.querySelector("#container");
-let color = "white"; 
 
-
-// the number of boxes in the grid. N => N/N;
-let numOfBoxes = 24;
-let boxSize = container.clientWidth / numOfBoxes; 
-
-
-//handle Rainbow effect
-//function to get random number from 1 to 255
-function getRGBNumber(n = Math.random() * 10000) {
-    return Math.floor((n/10000) * (255-1) + 1);
-}
-let isRainbow = false;
-
-// function to reset container 
+// FUNCTION TO RESET THE CONTAINER
 function resetContainer(cont) {
     let children = cont.childELementCount;
     while(cont.firstChild) {
@@ -23,7 +9,10 @@ function resetContainer(cont) {
     }
 }
 
-// function to draw the container
+// FUNCTION TO DRAW THE CONTAINER
+let numOfBoxes = 24;
+let boxSize = container.clientWidth / numOfBoxes; 
+
 function drawContainer() {
     resetContainer(container);
     container.style.width = boxSize * numOfBoxes; 
@@ -41,11 +30,11 @@ function drawContainer() {
 
 drawContainer()
 
-// function to start all listners
+// LISTENERS FUNCTIONALITIES
 function startListeners() {
     const gridBoxes = document.querySelectorAll(".grid-box");
 
-    // Event Listners for the container 
+    // EVENT LISTENERS FOR THE CONTAINER 
     let isLeftClick = false;
     container.addEventListener("mousedown", (e) =>{
         if (e.button === 0) {
@@ -57,10 +46,9 @@ function startListeners() {
         isLeftClick = false;
     })
     
-    // Event Listeners for the boxes
+    // EVENT LISTENERS FOR THE BOXES/PIXELS
     gridBoxes.forEach((box) => {
-        // color the box if you hover while holding left-click
-        box.addEventListener("mouseenter", (e) => {
+        box.addEventListener("mouseenter", (e) => { // color the box if you hover while holding left-click
             if(isLeftClick) {
                 if(isRainbow) {
                     box.style.backgroundColor = 'rgb(' + getRGBNumber() + ',' + getRGBNumber() + ',' + getRGBNumber() + ')';
@@ -70,15 +58,15 @@ function startListeners() {
                 box.style.transition = ".5s";
             }
         })
-        // color the box on single click
-        box.addEventListener("click", () => {
+        
+        box.addEventListener("click", () => { // color the box on single click
             box.style.backgroundColor = color;
             box.style.transition = ".5s";
         })
     })
 }
 
-// Slider 
+// SLIDER FUNCTIONALITY 
 const slider = document.querySelector("#container-slider");
 const sliderBtn = document.querySelector("#set-container-size");
 let sliderDisplayVal = document.querySelector("#slider-value");
@@ -97,13 +85,9 @@ sliderBtn.addEventListener("click", () => {
     drawContainer();
 })
 
-// Colors
+// COLORS
+let color = "white"; 
 const colorBtns = document.querySelector("#color-btns");
-
-function getRandomColor() {
-    let n = (Math.random() * 0xfffff * 100000).toString(16);
-    return '#' + n.slice(0, 6);
-}
 
 colorBtns.addEventListener("click", (e) => {
     selectedColor = e.target.id;
@@ -125,13 +109,14 @@ colorBtns.addEventListener("click", (e) => {
             isRainbow = false;  
             break}
         case "random": {
-            // let condition = false;
-            // while(condition) {
-            //     color = 'rgb(' + getRGBNumber() + ',' + getRGBNumber() + ',' + getRGBNumber() + ')';
-            // }
             isRainbow = true;            
             break;
         }
     }
 })
 
+
+function getRGBNumber(n = Math.random() * 10000) { // FUNC to get number from 1 to 255, used for random color
+    return Math.floor((n/10000) * (255-1) + 1);
+}
+let isRainbow = false; // USED in event listener for boxes/pixels
