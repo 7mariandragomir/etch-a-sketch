@@ -1,122 +1,106 @@
-let body = document.querySelector("body");
-let container = document.querySelector("#container");
+const body = document.querySelector("body");
+const grid = document.querySelector("#grid");
+const gridSlider = document.querySelector("#grid-slider");
+const clrPicker = document.querySelector("#clr-picker");
+const clrRainbow = document.querySelector("#clr-rainbow");
+const clrEraser = document.querySelector("#eraser");
+const displayTool = document.querySelector("#display-tool");
+const displayGridSize = document.querySelector("#display-size");
 
-// FUNCTION TO RESET THE CONTAINER
-function resetContainer(cont) {
-    let children = cont.childELementCount;
-    while(cont.firstChild) {
-        cont.removeChild(cont.lastChild);
+// GRID GENERATION =============================================================
+
+// grid slider handler
+let gridSize =gridSlider.value;
+gridSlider.addEventListener("input", () =>{
+    gridSize = gridSlider.value;
+    drawGrid()
+    displayGridSize.innerText = gridSize + "x" + gridSize;
+})
+
+// FUN to reset the grid
+function resetGrid() {
+    let child = grid.lastElementChild;
+    while(child) {
+        grid.removeChild(child);
+        child = grid.lastElementChild;
     }
 }
 
-// FUNCTION TO DRAW THE CONTAINER
-let numOfBoxes = 24;
-let boxSize = container.clientWidth / numOfBoxes; 
+// FUN to draw the grid
+function drawGrid() {
+    resetGrid();
+    for(let i = 0; i < gridSize; i++) { //draw a line in grid
+        const gridRow = document.createElement("div");
+        gridRow.classList.add("grid-row");
+        grid.appendChild(gridRow);
 
-function drawContainer() {
-    resetContainer(container);
-    container.style.width = boxSize * numOfBoxes; 
-    boxSize = container.clientWidth / numOfBoxes; 
-    for (let i = 0; i < (numOfBoxes * numOfBoxes); i++) {
-        const gridBox = document.createElement("div");
-        gridBox.classList.add('grid-box');
-        gridBox.style.width = boxSize.toString() + 'px';
-        gridBox.style.height = boxSize.toString() + 'px';
-        
-        container.appendChild(gridBox);
+        for (let int = 0; int < gridSize; int++) {
+            const gridItem = document.createElement("div");
+            gridItem.classList.add("grid-item");
+            gridRow.appendChild(gridItem);
+        }
     }
-    startListeners()
+    handleDrawing();
+    displayGridSize.innerText = gridSize + "x" + gridSize;
 }
+drawGrid();
 
-drawContainer()
+// DRAWING =====================================================================
+let selectedColor = clrPicker.value;
+let isRainbow = false;
+clrPicker.addEventListener("input", () =>{
+    selectedColor = clrPicker.value;
+    isRainbow = false;
+    displayTool.innerHTML = "color: " + clrPicker.value;
+})
 
-// LISTENERS FUNCTIONALITIES
-function startListeners() {
-    const gridBoxes = document.querySelectorAll(".grid-box");
 
-    // EVENT LISTENERS FOR THE CONTAINER 
+function handleDrawing() {
+    let gridItems = document.querySelectorAll(".grid-item");
     let isLeftClick = false;
-    container.addEventListener("mousedown", (e) =>{
-        if (e.button === 0) {
+
+    // handle holding left click
+    grid.addEventListener("mousedown", (e) => {
+        if(e.button === 0) {
             isLeftClick = true;
         }
     })
     
-    container.addEventListener("mouseup", () => {
+    body.addEventListener("mouseup", () =>{
         isLeftClick = false;
     })
-    
-    // EVENT LISTENERS FOR THE BOXES/PIXELS
-    gridBoxes.forEach((box) => {
-        box.addEventListener("mouseenter", (e) => { // color the box if you hover while holding left-click
+    // handle coloring
+    gridItems.forEach((item) => {
+        item.addEventListener("mouseenter", (e) =>{
             if(isLeftClick) {
                 if(isRainbow) {
-                    box.style.backgroundColor = 'rgb(' + getRGBNumber() + ',' + getRGBNumber() + ',' + getRGBNumber() + ')';
+                    item.style.backgroundColor = "hsl(" + Math.floor(Math.random() * (355 -1) + 1) + ",65%,65%)";
                 } else {
-                    box.style.backgroundColor = color;
+                    item.style.backgroundColor = selectedColor;
                 }
-                box.style.transition = ".5s";
+                item.style.transition = ".5s";
             }
         })
-        
-        box.addEventListener("click", () => { // color the box on single click
-            box.style.backgroundColor = color;
-            box.style.transition = ".5s";
+        item.addEventListener("click", () =>{
+            if(isRainbow) {
+                item.style.backgroundColor = "hsl(" + Math.floor(Math.random() * (355 -1) + 1) + ",65%,65%)";
+            } else {
+                item.style.backgroundColor = selectedColor;
+            }
+            item.style.transition = ".5s";
         })
-    })
-}
+    })}
 
-// SLIDER FUNCTIONALITY 
-const slider = document.querySelector("#container-slider");
-const sliderBtn = document.querySelector("#set-container-size");
-let sliderDisplayVal = document.querySelector("#slider-value");
-let sliderVal = numOfBoxes;
+// handle eraser 
 
-sliderDisplayVal.innerHTML = numOfBoxes;
-slider.value = numOfBoxes;
-
-slider.addEventListener("input", () => {
-    sliderDisplayVal.innerHTML = slider.value;
-    sliderVal = slider.value;
+clrEraser.addEventListener("click", () =>{
+    selectedColor = "";
+    isRainbow = false;
+    displayTool.innerHTML = "[eraser]";
 })
 
-sliderBtn.addEventListener("click", () => {
-    numOfBoxes = Number(sliderVal);
-    drawContainer();
+//handle rainbow color   Math.floor(Math.random() * (355 -1) + 1);
+clrRainbow.addEventListener("click", () =>{
+    isRainbow = true;
+    displayTool.innerHTML = "[rainbow]";
 })
-
-// COLORS
-let color = "white"; 
-const colorBtns = document.querySelector("#color-btns");
-
-colorBtns.addEventListener("click", (e) => {
-    selectedColor = e.target.id;
-    switch(selectedColor) {
-        case "white": {
-            color = "#fff";
-            isRainbow = false;
-            break};
-        case "blue": {
-            color = "rgb(0, 119, 255)";
-            isRainbow = false;
-            break} 
-        case "red": {
-            color = "hsl(345, 77%, 42%)";
-            isRainbow = false;
-            break}
-        case "eraser": {
-            color = "";
-            isRainbow = false;  
-            break}
-        case "random": {
-            isRainbow = true;            
-            break;
-        }
-    }
-})
-
-
-function getRGBNumber(n = Math.random() * 10000) { // FUNC to get number from 1 to 255, used for random color
-    return Math.floor((n/10000) * (255-1) + 1);
-}
-let isRainbow = false; // USED in event listener for boxes/pixels

@@ -1,137 +1,146 @@
+:root {
+    font-size: 8px;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    user-select: none;
 }
 
 body {
     font-family: sans-serif;
-    background-color: hsl(0, 0%, 9%);
+    background-color: #1f1f1f;
     height: 100vh;
     width: 100vw;
     display: flex;
     flex-direction: column;
-    justify-content: start;
-    align-items: center;
-}
-
-#container { 
-    display: flex; 
-    flex-wrap: wrap; 
-    justify-content: start;
-    align-items: center;
-    width: 70vw;
-    max-width: 960px;
-    border: 1px solid gray;
-}
-
-.grid-box {
-    /* border: .1px solid gray; */
-    width: 50px;
-    height: 50px;
-}
-
-.options {
-    padding: 30px 10px;
-    display: flex;
-    flex-direction: row;
-    width: 70vw;
-    max-width: 960px;
-    justify-content: space-between;
-}
-
-.slider {
-    color: #fff;
-    display: flex;
     justify-content: center;
     align-items: center;
-    padding-bottom: 10px;
-    gap: 10px;
+    gap: 3rem;
+    padding: 8% 6%;
 }
 
-.slider button {
-    padding: 2px 5px;
-    outline: none;
-    border: none;
-    outline: none;
+h1 {
+    color: #d9d9d9;
+    font-size: 6rem;
 }
 
-.slider button:hover {
-    font-weight: 800;
-    background-color: aquamarine;
+h2 {
+    color: #4b4b4b;
+    font-size: 3rem;
 }
 
-#color-btns {
+/* TOOLS */
+#tools {
     display: flex;
-    justify-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 63rem;
+    max-width: 95vw;
+    height: 6rem;
+
+    background-color: #d9d9d9;
+    border-radius: 5rem;
+    padding: 1rem 2rem;
+}
+
+#colors,
+#grid-controls {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
     align-items: center;
-    padding-bottom: 10px;
-    gap: 10px;
 }
 
-#color-btns .color-btn {
-    padding: 0;
-    border: 2px solid rgb(255, 255, 255);
-    border-radius: 20px;
-    margin: 0;
-    outline: 0;
-    width: 30px;
-    height: 30px;
-}
-
-#color-btns:hover {
+#clr-picker {
+    width: 4rem;
+    height: 4rem;
+    background-color: transparent;
+    appearance: none;
+    border: none;
+    overflow: hidden;
     cursor: pointer;
 }
 
-#color-btns #random {
-    animation: colorGradient 2s infinite;
+#clr-picker::-webkit-color-swatch {
+    appearance: none;
+    border: none;
+    border-radius: 20%;
+    padding: 0;
+    margin: 0;
 }
 
-#color-btns #white {
-    background-color: #fff;
+#clr-rainbow {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    background-image: linear-gradient(to right, #2BF6C7, #4177EC, #E31BCF);
+    cursor: pointer;
 }
 
-#color-btns #blue {
-    background-color: rgb(0, 119, 255);
+#eraser {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    cursor: pointer;
 }
 
-#color-btns > #red {
-    background-color: hsl(345, 77%, 42%);
+#eraser img{
+    width: 3rem;
+    height: 3rem;
 }
 
-#color-btns #eraser {
-    background-color: transparent;
-    color: red;
+#display-tool {
+    color: #4b4b4b;
+    font-size: 2rem;
+    font-weight: 600;
+    padding-left: 1rem;
 }
 
-
-.gradient { 
-    animation: colorGradient 60s infinite;
-    transition: ease-in-out;
+#clear {
+    color: #1f1f1f;
+    font-size: 2rem;
+    font-weight: 600;
+    cursor: pointer;
 }
 
-@keyframes colorGradient {
-    0% {
-        background-color: rgb(255, 80, 80);
-    }
+#grid-slider {
+    appearance: none;
+    background: #1f1f1f;
+    outline: none;
+    height: .5rem;
+    border-radius: 1rem;
+}
 
-    15% {
-        background-color:rgb(245, 242, 51);
-    }
+/* GRID */
 
-    35% {
-        background-color:rgb(88, 243, 73)
-    }
+#grid {
+    aspect-ratio: 1 /1;
+    width: 63rem;
+    max-width: 95vw;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    background-color: #d9d9d9;
+    overflow: hidden;
+}
 
-    55% {
-        background-color:rgb(20, 239, 255);
-    }
+.grid-row {
+    display: flex;
+    flex: 1;
+    width: 100%;
 
-    75% {
-        background-color:rgb(153, 54, 233);
-    }
+}
 
-    100% {
-        background-color: rgb(255, 80, 80);
-    }
+.grid-item {
+    flex: 1;
+    border: .1rem solid #c2c2c2;
 }

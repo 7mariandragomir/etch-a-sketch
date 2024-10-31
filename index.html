@@ -3,25 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Etch-A-Sketch</title>
+    <title>etch a sketch</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
-<body>
-    <div class="options">
-        <div class="slider">
-            <span id="slider-value"></span>
-            <input type="range" id="container-slider" min="4" max="100">
-            <button id="set-container-size">Set</button>
+<body ondragstart="return false;" ondrop="return false;">
+    <h1>etch a sketch</h1>
+    <h2 id="display-size"></h2>
+    <div id="tools">
+        <div id="colors">
+            <input type="color" value="#2895de" name="clr-picker" id="clr-picker">
+            <div id="clr-rainbow"></div>
+            <div id="eraser">
+                <img src="/eraser-icon.svg" alt="X">
+            </div>
+            <span id="display-tool">[select a color]</span>
         </div>
-        <div id="color-btns">
-            <button class="color-btn" id="white"></button>
-            <button class="color-btn" id="blue"></button>
-            <button class="color-btn" id="red"></button>
-            <button class="color-btn .gradient" id="random"></button>
-            <button class="color-btn" id="eraser">X</button>
+        <div id="grid-controls">
+            <span id="clear">clear</span>
+            <input type="range" min="4" max="40" name="grid-slider" id="grid-slider">
         </div>
     </div>
-    <div id="container"></div>
+
+    <div id="grid"></div>
 </body>
 </html>
