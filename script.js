@@ -6,6 +6,7 @@ const clrRainbow = document.querySelector("#clr-rainbow");
 const clrEraser = document.querySelector("#eraser");
 const displayTool = document.querySelector("#display-tool");
 const displayGridSize = document.querySelector("#display-size");
+const clearBtn = document.querySelector("#clear");
 
 // GRID GENERATION =============================================================
 
@@ -99,8 +100,15 @@ clrEraser.addEventListener("click", () =>{
     displayTool.innerHTML = "[eraser]";
 })
 
-//handle rainbow color   Math.floor(Math.random() * (355 -1) + 1);
+//handle rainbow color
 clrRainbow.addEventListener("click", () =>{
     isRainbow = true;
     displayTool.innerHTML = "[rainbow]";
+})
+
+//handle clear
+clearBtn.addEventListener("click", () =>{
+    document.querySelectorAll(".grid-item").forEach((item) =>{
+        item.style.backgroundColor = "transparent";
+    })
 })
